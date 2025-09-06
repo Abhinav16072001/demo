@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+
+  <form id="todoForm">
+    <label for="itemName">Item Name</label>
+    <input type="text" id="itemName" name="itemName" required>
+
+    <label for="itemDesc">Item Description</label>
+    <textarea id="itemDesc" name="itemDesc" rows="3"></textarea>
+
+    <button type="submit">Add Item</button>
+  </form>
+
+  <ul id="todoList"></ul>
+
+  <script>
+    const form = document.getElementById('todoForm');
+    const list = document.getElementById('todoList');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('itemName').value.trim();
+      const desc = document.getElementById('itemDesc').value.trim();
+
+      if (name === '') return; // safety check
+
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${name}</strong><br>${desc}`;
+      list.appendChild(li);
+
+      // Reset form
+      form.reset();
+    });
+  </script>
+</body>
+</html>
