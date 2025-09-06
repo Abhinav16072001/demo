@@ -25,5 +25,28 @@ def add():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+@app.route("/submittodoitem", methods=["POST"])
+def submit_todo_item():
+    data = request.get_json(force=True)
+
+    item_name = data.get("itemName")
+    item_description = data.get("itemDescription")
+
+    if not item_name:
+        return jsonify({"error": "Item Name is required"}), 400
+
+    todo_id = todos.insert_one({
+        "itemName": item_name,
+        "itemDescription": item_description,
+    }).inserted_id
+
+    return jsonify({
+        "message": "To-Do item saved successfully",
+        "id": str(todo_id),
+        "itemName": item_name,
+        "itemDescription": item_description
+    }), 201
+
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
