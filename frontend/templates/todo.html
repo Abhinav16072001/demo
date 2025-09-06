@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>To-Do Page</title>
+  <title>Enhanced To-Do Form</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,6 +18,9 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
     label {
       display: block;
@@ -44,6 +47,9 @@
     ul {
       list-style: none;
       padding: 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
     li {
       background: #fff;
@@ -55,9 +61,18 @@
   </style>
 </head>
 <body>
-  <h1>To-Do List</h1>
+  <h1>Enhanced To-Do List</h1>
 
   <form id="todoForm">
+    <label for="itemId">Item ID</label>
+    <input type="number" id="itemId" name="itemId" required>
+
+    <label for="itemUUID">Item UUID</label>
+    <input type="text" id="itemUUID" name="itemUUID">
+
+    <label for="itemHash">Item Hash</label>
+    <input type="text" id="itemHash" name="itemHash">
+
     <label for="itemName">Item Name</label>
     <input type="text" id="itemName" name="itemName" required>
 
@@ -75,16 +90,25 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      const id = document.getElementById('itemId').value.trim();
+      const uuid = document.getElementById('itemUUID').value.trim();
+      const hash = document.getElementById('itemHash').value.trim();
       const name = document.getElementById('itemName').value.trim();
       const desc = document.getElementById('itemDesc').value.trim();
 
-      if (name === '') return; // safety check
+      if (name === '' || id === '') return;
 
       const li = document.createElement('li');
-      li.innerHTML = `<strong>${name}</strong><br>${desc}`;
+      li.innerHTML = `
+        <strong>ID:</strong> ${id} <br>
+        <strong>UUID:</strong> ${uuid || '—'} <br>
+        <strong>Hash:</strong> ${hash || '—'} <br>
+        <strong>Name:</strong> ${name} <br>
+        <strong>Description:</strong> ${desc || '—'}
+      `;
       list.appendChild(li);
 
-      // Reset form
       form.reset();
     });
   </script>
